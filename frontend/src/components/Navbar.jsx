@@ -1,46 +1,63 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-// Styled Components for Navbar
-const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background-color: #007bff;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-`;
+const Navbar = () => {
+  const [userName, setUserName] = useState(null);
+  const navigate = useNavigate();
 
-const Logo = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-`;
+  useEffect(() => {
+    // Check if user is logged in by looking for the user's name in localStorage
+    const storedName = localStorage.getItem("userName");
+    if (storedName) {
+      setUserName(storedName);
+    }
+  }, []);
 
-const NavLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  margin: 0 15px;
-  font-size: 18px;
+  const handleLogout = () => {
+    // Clear user-related data from localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    setUserName(null);
+    navigate("/login"); // Redirect to login page
+  };
 
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Navbar = () => (
-  <Nav>
-    <NavLink to="/"><Logo>Tracker </Logo></NavLink>
-    
-    <div>
-      <NavLink to="/login">Login</NavLink>
-      <NavLink to="/signup">Signup</NavLink>
-    </div>
-  </Nav>
-);
+  return (
+    <nav className="sticky top-0 z-10 flex items-center justify-between p-4 text-white bg-blue-500 shadow-md">
+      {/* Logo */}
+      <Link to="/" className="text-2xl font-bold">
+        Tracker
+      </Link>
+      {/* Navigation Links */}
+      <div className="flex items-center space-x-4">
+        {userName ? (
+          <>
+            <span className="text-lg">Welcome, {userName}</span>
+            <button
+              onClick={handleLogout}
+              className="text-lg hover:underline focus:outline-none"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="text-lg hover:underline focus:outline-none"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="text-lg hover:underline focus:outline-none"
+            >
+              Signup
+            </Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+};
 
 export default Navbar;

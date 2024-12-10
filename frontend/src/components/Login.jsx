@@ -12,18 +12,28 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/users/login', formData);
+  
       alert(response.data.message);
-      localStorage.setItem('token', response.data.token); // Store JWT token
+      
+      // Store the token and user's name
+      localStorage.setItem('token', response.data.token); 
+      localStorage.setItem('userName', response.data.name); // Store user's name
+  
+      // Clear the form
       setFormData({ email: '', password: '' });
+  
+      // Optionally, redirect to a protected page
+      window.location.href = '/';
     } catch (error) {
       console.error(error);
       alert(error.response.data.message || 'Error logging in');
     }
   };
+  
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100 h-screen overflow-hidden">
-      <div className="w-full max-w-md p-8 bg-white shadow-md rounded-md">
+    <div className="flex items-center justify-center h-screen overflow-hidden bg-gray-100">
+      <div className="w-full max-w-md p-8 bg-white rounded-md shadow-md">
         <h2 className="text-2xl font-semibold text-center text-gray-700">Login</h2>
         <form className="mt-6" onSubmit={handleSubmit}>
           <div className="mb-4">

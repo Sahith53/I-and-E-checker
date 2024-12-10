@@ -5,12 +5,16 @@ const incomeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',  // Reference to user model for authentication
-    required: true,
+  description: {
+    type: String,
+    required: false,
   },
-}, { timestamps: true });
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 const Income = mongoose.model('Income', incomeSchema);
+
 module.exports = Income;

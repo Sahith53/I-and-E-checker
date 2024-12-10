@@ -19,7 +19,7 @@ const expenseSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to user model for authentication
-    required: true,
+    required: false,
   },
 }, { timestamps: true });
 

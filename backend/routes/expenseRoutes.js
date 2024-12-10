@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Expense = require('../models/Expense');
+// const express = require('express');
+// const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.json({ message: 'Expense route' });
+});
+
+module.exports = router;
 
 // Add expense
 router.post('/', async (req, res) => {
