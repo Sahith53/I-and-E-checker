@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
+import styled from "";
 
 // Styled Components for Expenses Page
 const ExpensesContainer = styled.div`
@@ -54,11 +54,19 @@ const Button = styled.button`
 `;
 
 const Expenses = () => {
-  const [expense, setExpense] = useState({ date: "", category: "", amount: "", note: "" });
+  const [expense, setExpense] = useState({
+    date: "",
+    category: "",
+    amount: "",
+    note: "",
+  });
 
   const addExpense = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/expenses", expense);
+      const response = await axios.post(
+        "http://localhost:5000/api/expenses",
+        expense
+      );
       alert(response.data.message);
       setExpense({ date: "", category: "", amount: "", note: "" });
     } catch (error) {

@@ -41,14 +41,14 @@ const ToggleButton = styled.button`
   transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: ${(props) => (props.active ? "#16a085" : "#95a5a6")};
+    background-color: ${(props) => (props.$active ? "#16a085" : "#95a5a6")};
     transform: translateY(-2px);
   }
 `;
 
 const Section = styled.div`
   margin-top: 20px;
-  display: ${(props) => (props.show ? "block" : "none")};
+  display: ${(props) => (props.$show ? "block" : "none")};
 `;
 
 const Input = styled.input`
@@ -149,6 +149,7 @@ const IncomeSection = () => {
       setSuccess(response.data.message);
       setError("");
       setAmount("");
+      console.log('Income added:', response.data);
     } catch (error) {
       setError("Failed to add income. Please try again.");
       setSuccess("");
@@ -235,30 +236,28 @@ const Home = () => {
   return (
     <HomeContainer>
       <Header>Income and Expenses Tracker</Header>
-      <ToggleButtonContainer>
-        <ToggleButton
-          active={activeTab === "income"}
-          onClick={() => setActiveTab("income")}
-        >
-          Income
-        </ToggleButton>
-        <ToggleButton
-          active={activeTab === "expenses"}
-          onClick={() => setActiveTab("expenses")}
-        >
-          Expenses
-        </ToggleButton>
-      </ToggleButtonContainer>
+      <ToggleButton
+  $active={activeTab === "income"}
+  onClick={() => setActiveTab("income")}
+>
+  Income
+</ToggleButton>
 
-      {/* Income Section */}
-      <Section show={activeTab === "income"}>
-        <IncomeSection />
-      </Section>
+<ToggleButton
+  $active={activeTab === "expenses"}
+  onClick={() => setActiveTab("expenses")}
+>
+  Expenses
+</ToggleButton>
 
-      {/* Expenses Section */}
-      <Section show={activeTab === "expenses"}>
-        <ExpensesSection />
-      </Section>
+<Section $show={activeTab === "income"}>
+  <IncomeSection />
+</Section>
+
+<Section $show={activeTab === "expenses"}>
+  <ExpensesSection />
+</Section>
+
     </HomeContainer>
   );
 };
